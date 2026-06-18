@@ -32,13 +32,13 @@ app.get('/chat',  (req, res) => res.sendFile(path.join(__dirname, 'public', 'cha
 app.get('/rooms', (req, res) => res.sendFile(path.join(__dirname, 'public', 'rooms.html')));
 app.get('/start', (req, res) => res.sendFile(path.join(__dirname, 'public', 'start.html')));
 app.get('/dm',    (req, res) => res.sendFile(path.join(__dirname, 'public', 'dm.html')));
-<<<<<<< HEAD
+
 app.get('/about',   (req, res) => res.sendFile(path.join(__dirname, 'public', 'about.html')));
 app.get('/contact', (req, res) => res.sendFile(path.join(__dirname, 'public', 'contact.html')));
 app.get('/privacy', (req, res) => res.sendFile(path.join(__dirname, 'public', 'privacy.html')));
 app.get('/terms',   (req, res) => res.sendFile(path.join(__dirname, 'public', 'terms.html')));
-=======
->>>>>>> 89db5f14dcb822e3d094ba727cb6381951cae03c
+
+
 
 /* ═══════════════════════════════════════
    Server State

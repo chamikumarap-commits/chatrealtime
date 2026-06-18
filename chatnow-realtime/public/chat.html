@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatNow – Random Chat</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="chat-page">
+
+<div class="chat-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="chat-sidebar">
+    <a href="/" class="logo sidebar-logo">Chat<span>Now</span></a>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="myAvatar">😊</div>
+      <div class="user-info">
+        <strong id="myName">You</strong>
+        <span class="online-badge"><i class="fa-solid fa-circle"></i> Online</span>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/chat" class="active"><i class="fa-solid fa-shuffle"></i> Random Chat</a>
+      <a href="/rooms"><i class="fa-solid fa-door-open"></i> Chat Rooms</a>
+      <a href="/dm"><i class="fa-solid fa-envelope"></i> Direct Messages</a>
+      <a href="/"><i class="fa-solid fa-house"></i> Home</a>
+    </nav>
+    <div class="online-counter sidebar-counter">
+      <i class="fa-solid fa-signal"></i>
+      <span id="onlineCount">...</span> online
+    </div>
+    <div class="ws-status" id="wsStatus">
+      <i class="fa-solid fa-circle-notch fa-spin"></i> Connecting...
+    </div>
+    <button class="btn-skip sidebar-skip" onclick="skipStranger()">
+      <i class="fa-solid fa-forward"></i> Skip & Next
+    </button>
+  </aside>
+
+  <!-- MAIN CHAT -->
+  <main class="chat-main">
+
+    <div class="chat-header">
+      <div class="stranger-info">
+        <div class="user-avatar small" id="strangerAvatar">🌍</div>
+        <div>
+          <strong id="strangerName">Not connected</strong>
+          <small id="strangerStatus">Click "New Chat" to start</small>
+        </div>
+      </div>
+      <div class="chat-actions">
+        <button class="icon-btn" title="Report" onclick="openReport()"><i class="fa-solid fa-flag"></i></button>
+        <button class="icon-btn" title="Block" onclick="blockUser()"><i class="fa-solid fa-ban"></i></button>
+        <button class="btn-skip" onclick="skipStranger()"><i class="fa-solid fa-forward"></i> Skip</button>
+        <button class="btn-stop" onclick="stopChat()"><i class="fa-solid fa-stop"></i> Stop</button>
+        <button class="btn-hero" style="padding:.5rem 1rem;font-size:.85rem" onclick="newChat()">
+          <i class="fa-solid fa-bolt"></i> New Chat
+        </button>
+      </div>
+    </div>
+
+    <div class="messages-area" id="messagesArea">
+      <div class="system-msg" id="initMsg">
+        <i class="fa-solid fa-comments"></i> Click <strong>New Chat</strong> to find a stranger!
+      </div>
+    </div>
+
+    <div class="typing-indicator" id="typingIndicator" style="display:none;">
+      Stranger is typing
+      <span class="typing-dots"><span></span><span></span><span></span></span>
+    </div>
+
+    <div class="chat-input-bar">
+      <div class="input-tools">
+        <button class="tool-btn" title="Send Image" onclick="document.getElementById('imgInput').click()">
+          <i class="fa-solid fa-image"></i>
+        </button>
+        <button class="tool-btn" title="Emoji" onclick="toggleEmojiPicker()">
+          <i class="fa-solid fa-face-smile"></i>
+        </button>
+        <input type="file" id="imgInput" accept="image/*" style="display:none" onchange="sendImage(event)"/>
+      </div>
+      <input
+        type="text" id="msgInput" class="msg-input"
+        placeholder="Type a message... (Enter to send)"
+        onkeydown="handleKey(event)" oninput="handleTyping()"
+        maxlength="500"
+      />
+      <button class="btn-send" onclick="sendMessage()" id="sendBtn">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+
+    <!-- Emoji Picker -->
+    <div class="emoji-picker" id="emojiPicker" style="display:none">
+      <div class="emoji-grid" id="emojiGrid"></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- REPORT MODAL -->
+<div class="modal-overlay" id="reportModal" style="display:none">
+  <div class="modal">
+    <h3><i class="fa-solid fa-flag"></i> Report User</h3>
+    <p>Why are you reporting this user?</p>
+    <div class="report-options">
+      <button onclick="submitReport('Spam or bots')">Spam or bots</button>
+      <button onclick="submitReport('Inappropriate content')">Inappropriate content</button>
+      <button onclick="submitReport('Harassment')">Harassment</button>
+      <button onclick="submitReport('Underage user')">Underage user</button>
+    </div>
+    <button class="modal-close" onclick="closeModal('reportModal')">Cancel</button>
+  </div>
+</div>
+
+<script src="/js/socket.js"></script>
+<script src="/js/chat-rt.js"></script>
+</body>
+</html>

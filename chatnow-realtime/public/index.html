@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatNow – Free Random Chat with Strangers</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<header class="header">
+  <div class="container header-inner">
+    <a href="/"" class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-comments"></i></span>
+      Chat<span>Now</span>
+    </a>
+    <nav class="nav">
+      <a href="/"" class="active"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="/chat"><i class="fa-solid fa-bolt"></i> Random Chat</a>
+      <a href="/rooms"><i class="fa-solid fa-door-open"></i> Rooms</a>
+      <a href="/dm"><i class="fa-solid fa-envelope"></i> DMs</a>
+      <a href="#features"><i class="fa-solid fa-star"></i> Features</a>
+    </nav>
+    <button class="btn-start" onclick="window.location.href='/start'">Start Chatting →</button>
+    <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="/"">Home</a>
+    <a href="/chat">Random Chat</a>
+    <a href="/rooms">Chat Rooms</a>
+    <a href="/start">Start Chatting</a>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-lines"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span> 12,847 people online now</div>
+    <h1>Chat with <span class="gradient-text">Strangers</span><br/>Worldwide — Instantly</h1>
+    <p>No registration needed. No downloads. Just pick a nickname and start real conversations with real people from around the globe.</p>
+
+    <div class="hero-form">
+      <div class="form-row">
+        <div class="input-group">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="heroNickname" placeholder="Your nickname" maxlength="20"/>
+        </div>
+        <select id="heroGender">
+          <option value="">Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <select id="heroAge">
+          <option value="">Age</option>
+          <option value="18-24">18–24</option>
+          <option value="25-34">25–34</option>
+          <option value="35-44">35–44</option>
+          <option value="45+">45+</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <select id="heroCountry">
+          <option value="">Select Country</option>
+          <option value="US">🇺🇸 United States</option>
+          <option value="UK">🇬🇧 United Kingdom</option>
+          <option value="CA">🇨🇦 Canada</option>
+          <option value="AU">🇦🇺 Australia</option>
+          <option value="IN">🇮🇳 India</option>
+          <option value="LK">🇱🇰 Sri Lanka</option>
+          <option value="PK">🇵🇰 Pakistan</option>
+          <option value="BD">🇧🇩 Bangladesh</option>
+          <option value="PH">🇵🇭 Philippines</option>
+          <option value="NG">🇳🇬 Nigeria</option>
+          <option value="DE">🇩🇪 Germany</option>
+          <option value="FR">🇫🇷 France</option>
+          <option value="BR">🇧🇷 Brazil</option>
+          <option value="MX">🇲🇽 Mexico</option>
+          <option value="OTHER">🌍 Other</option>
+        </select>
+        <button class="btn-hero" onclick="startChat()">
+          <i class="fa-solid fa-paper-plane"></i> Start Chat Free
+        </button>
+      </div>
+      <p class="form-note"><i class="fa-solid fa-shield-halved"></i> Anonymous & Safe · No account required · Free forever</p>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="container stats-row">
+      <div class="stat"><strong>50M+</strong><span>Messages sent</span></div>
+      <div class="stat"><strong>190+</strong><span>Countries</span></div>
+      <div class="stat"><strong>Free</strong><span>Always & Forever</span></div>
+      <div class="stat"><strong>24/7</strong><span>Always Online</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FEATURES ========== -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-label">Why ChatNow?</div>
+    <h2>Everything you need to <span class="gradient-text">connect</span></h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon cyan"><i class="fa-solid fa-bolt"></i></div>
+        <h3>Instant Random Chat</h3>
+        <p>Get matched with a random stranger in seconds. No waiting, no setup — pure spontaneous connection.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon purple"><i class="fa-solid fa-door-open"></i></div>
+        <h3>Chat Rooms</h3>
+        <p>Join themed chat rooms — General, Singles, Gaming, Travel, and more. Find your tribe instantly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon orange"><i class="fa-solid fa-lock"></i></div>
+        <h3>100% Anonymous</h3>
+        <p>No account required. Your IP is masked. Chat freely without revealing your personal identity.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon green"><i class="fa-solid fa-mobile-screen"></i></div>
+        <h3>Mobile Friendly</h3>
+        <p>Works perfectly on any device — phone, tablet, or desktop. Chat on the go anytime, anywhere.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon pink"><i class="fa-solid fa-image"></i></div>
+        <h3>Media Sharing</h3>
+        <p>Share images, GIFs, and files directly in chat. Express yourself beyond just words.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon blue"><i class="fa-solid fa-globe"></i></div>
+        <h3>Global Community</h3>
+        <p>Connect with people from 190+ countries. Break language barriers and make worldwide friends.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon purple"><i class="fa-solid fa-envelope"></i></div>
+        <h3>Direct Messages</h3>
+        <p>Send private DMs to any online user. Full image support, typing indicators, and real-time delivery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CHAT ROOMS PREVIEW ========== -->
+<section class="rooms-preview">
+  <div class="container">
+    <div class="section-label">Chat Rooms</div>
+    <h2>Pick a room & <span class="gradient-text">join the conversation</span></h2>
+    <div class="rooms-grid">
+      <a href="/rooms?room=general" class="room-card">
+        <div class="room-icon">💬</div>
+        <h4>General Chat</h4>
+        <p>Talk about anything</p>
+        <span class="room-users"><i class="fa-solid fa-circle"></i> 3,421 online</span>
+      </a>
+      <a href="/rooms?room=singles" class="room-card hot">
+        <div class="hot-badge">🔥 Hot</div>
+        <div class="room-icon">💕</div>
+        <h4>Singles Chat</h4>
+        <p>Meet someone special</p>
+        <span class="room-users"><i class="fa-solid fa-circle"></i> 5,182 online</span>
+      </a>
+      <a href="/rooms?room=gaming" class="room-card">
+        <div class="room-icon">🎮</div>
+        <h4>Gaming</h4>
+        <p>Talk games & play</p>
+        <span class="room-users"><i class="fa-solid fa-circle"></i> 1,984 online</span>
+      </a>
+      <a href="/rooms?room=travel" class="room-card">
+        <div class="room-icon">✈️</div>
+        <h4>Travel</h4>
+        <p>Share adventures</p>
+        <span class="room-users"><i class="fa-solid fa-circle"></i> 892 online</span>
+      </a>
+      <a href="/rooms?room=music" class="room-card">
+        <div class="room-icon">🎵</div>
+        <h4>Music & Arts</h4>
+        <p>Creative souls unite</p>
+        <span class="room-users"><i class="fa-solid fa-circle"></i> 741 online</span>
+      </a>
+      <a href="/rooms?room=tech" class="room-card">
+        <div class="room-icon">💻</div>
+        <h4>Tech Talk</h4>
+        <p>Geeks & devs welcome</p>
+        <span class="room-users"><i class="fa-solid fa-circle"></i> 1,103 online</span>
+      </a>
+    </div>
+    <div class="rooms-cta">
+      <a href="/rooms" class="btn-outline">View All Rooms <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="how-it-works">
+  <div class="container">
+    <div class="section-label">How It Works</div>
+    <h2>Three steps to your <span class="gradient-text">next conversation</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <i class="fa-solid fa-pen step-icon"></i>
+        <h4>Enter Your Details</h4>
+        <p>Pick a nickname, your age, gender and country. No email, no password needed.</p>
+      </div>
+      <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <i class="fa-solid fa-shuffle step-icon"></i>
+        <h4>Get Matched</h4>
+        <p>Our system instantly connects you with a random stranger or drops you into a room.</p>
+      </div>
+      <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <i class="fa-solid fa-comments step-icon"></i>
+        <h4>Start Chatting</h4>
+        <p>Text, share images, send GIFs — the conversation is yours to own.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA BANNER ========== -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>Ready to meet someone new?</h2>
+    <p>Join thousands of people chatting right now — it's free, instant, and fun.</p>
+    <button class="btn-hero large" onclick="window.location.href='/start'">
+      <i class="fa-solid fa-bolt"></i> Start Chatting Now
+    </button>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a href="/"" class="logo">Chat<span>Now</span></a>
+      <p>Free anonymous chat with strangers from around the world. Safe, fun, and instant.</p>
+      <div class="social-links">
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-discord"></i></a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h5>Chat</h5>
+      <a href="/chat">Random Chat</a>
+      <a href="/rooms">Chat Rooms</a>
+      <a href="/start">Start Now</a>
+    </div>
+    <div class="footer-links">
+      <h5>Company</h5>
+      <a href="#">About Us</a>
+      <a href="#">Safety Tips</a>
+      <a href="#">Community Rules</a>
+    </div>
+    <div class="footer-links">
+      <h5>Legal</h5>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 ChatNow. All rights reserved. For users 18+ only.</p>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatNow – Direct Messages</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="stylesheet" href="/css/dm.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="dm-page">
+
+<div class="dm-layout">
+
+  <!-- ══ LEFT: User List Panel ══ -->
+  <aside class="dm-sidebar">
+    <div class="dm-sidebar-header">
+      <a href="/" class="logo">Chat<span>Now</span></a>
+      <div class="dm-nav-links">
+        <a href="/chat"  title="Random Chat"><i class="fa-solid fa-shuffle"></i></a>
+        <a href="/rooms" title="Chat Rooms"><i class="fa-solid fa-door-open"></i></a>
+        <a href="/dm" class="active" title="Direct Messages"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <!-- My profile strip -->
+    <div class="dm-my-profile" id="myProfile">
+      <div class="dm-avatar" id="myAvatar">😊</div>
+      <div class="dm-profile-info">
+        <strong id="myNickname">You</strong>
+        <span class="dm-online-dot"><i class="fa-solid fa-circle"></i> Online</span>
+      </div>
+      <div class="ws-pill" id="wsPill"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+    </div>
+
+    <!-- Search users -->
+    <div class="dm-search-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="userSearch" placeholder="Search users..." oninput="filterUsers()"/>
+    </div>
+
+    <!-- Online users list -->
+    <div class="dm-section-label">
+      <span>Online Users</span>
+      <span class="dm-count" id="userCount">0</span>
+    </div>
+    <div class="dm-user-list" id="userList">
+      <div class="dm-empty-state" id="emptyUsers">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <p>Waiting for users...</p>
+      </div>
+    </div>
+
+    <!-- Recent DM conversations -->
+    <div class="dm-section-label" id="recentLabel" style="display:none">
+      <span>Recent DMs</span>
+    </div>
+    <div class="dm-recent-list" id="recentList"></div>
+  </aside>
+
+  <!-- ══ RIGHT: DM Chat Panel ══ -->
+  <main class="dm-main">
+
+    <!-- Empty state (no conversation selected) -->
+    <div class="dm-welcome" id="dmWelcome">
+      <div class="dm-welcome-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+      <h2>Direct Messages</h2>
+      <p>Select an online user from the left to start a private conversation.</p>
+      <div class="dm-welcome-tips">
+        <div class="tip"><i class="fa-solid fa-lock"></i> Private 1-on-1 chat</div>
+        <div class="tip"><i class="fa-solid fa-image"></i> Share images</div>
+        <div class="tip"><i class="fa-solid fa-bolt"></i> Real-time delivery</div>
+      </div>
+    </div>
+
+    <!-- Active DM conversation -->
+    <div class="dm-conversation" id="dmConversation" style="display:none">
+
+      <!-- Header -->
+      <div class="dm-conv-header">
+        <button class="dm-back-btn" onclick="closeDM()" title="Back"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="dm-conv-avatar" id="convAvatar">🌍</div>
+        <div class="dm-conv-info">
+          <strong id="convName">User</strong>
+          <span id="convStatus" class="dm-conv-status online">
+            <i class="fa-solid fa-circle"></i> Online
+          </span>
+        </div>
+        <div class="dm-conv-actions">
+          <button class="icon-btn" onclick="clearDMHistory()" title="Clear chat"><i class="fa-solid fa-trash"></i></button>
+          <button class="icon-btn" onclick="blockDMUser()" title="Block user"><i class="fa-solid fa-ban"></i></button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="dm-messages" id="dmMessages">
+        <div class="dm-conv-start" id="dmConvStart">
+          <i class="fa-solid fa-lock"></i>
+          <p>This is the beginning of your private conversation.</p>
+        </div>
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="dm-typing" id="dmTyping" style="display:none">
+        <span id="dmTypingName">User</span> is typing
+        <span class="typing-dots"><span></span><span></span><span></span></span>
+      </div>
+
+      <!-- Input bar -->
+      <div class="dm-input-bar">
+        <button class="tool-btn" onclick="document.getElementById('dmImgInput').click()" title="Send image">
+          <i class="fa-solid fa-image"></i>
+        </button>
+        <button class="tool-btn" onclick="toggleDMEmoji()" title="Emoji">
+          <i class="fa-solid fa-face-smile"></i>
+        </button>
+        <input type="file" id="dmImgInput" accept="image/*" style="display:none" onchange="sendDMImage(event)"/>
+        <input
+          type="text" id="dmInput" class="msg-input"
+          placeholder="Send a message..."
+          onkeydown="dmHandleKey(event)"
+          oninput="dmHandleTyping()"
+          maxlength="500"
+        />
+        <button class="btn-send" onclick="sendDM()" id="dmSendBtn">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+
+      <!-- Emoji picker -->
+      <div class="emoji-picker" id="dmEmojiPicker" style="display:none">
+        <div class="emoji-grid" id="dmEmojiGrid"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Nickname modal (if user has no nickname yet) -->
+<div class="modal-overlay" id="nickModal" style="display:none">
+  <div class="modal">
+    <h3><i class="fa-solid fa-user"></i> Set Your Nickname</h3>
+    <p>You need a nickname to send direct messages.</p>
+    <input type="text" id="nickInput" placeholder="Your nickname" maxlength="20"/>
+    <button class="btn-hero full-width" style="margin-top:1rem" onclick="saveNickname()">
+      <i class="fa-solid fa-check"></i> Continue
+    </button>
+  </div>
+</div>
+
+<script src="/js/socket.js"></script>
+<script src="/js/dm.js"></script>
+</body>
+</html>

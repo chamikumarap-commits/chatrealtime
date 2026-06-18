@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ChatNow – Start Chatting</title>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body class="start-page">
+
+<div class="start-bg">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+</div>
+
+<div class="start-container">
+  <a href="/"" class="logo centered-logo">Chat<span>Now</span></a>
+  <h2>Join the Chat</h2>
+  <p class="start-sub">Fill in your details to start chatting — no account needed!</p>
+
+  <div class="start-form">
+    <div class="field">
+      <label><i class="fa-solid fa-user"></i> Nickname</label>
+      <input type="text" id="sNickname" placeholder="e.g. CoolDude99" maxlength="20"/>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label><i class="fa-solid fa-venus-mars"></i> Gender</label>
+        <select id="sGender">
+          <option value="">Choose</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label><i class="fa-solid fa-cake-candles"></i> Age</label>
+        <select id="sAge">
+          <option value="">Age</option>
+          <option value="18-24">18–24</option>
+          <option value="25-34">25–34</option>
+          <option value="35-44">35–44</option>
+          <option value="45+">45+</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label><i class="fa-solid fa-globe"></i> Country</label>
+      <select id="sCountry">
+        <option value="">Select Country</option>
+        <option value="US">🇺🇸 United States</option>
+        <option value="UK">🇬🇧 United Kingdom</option>
+        <option value="CA">🇨🇦 Canada</option>
+        <option value="AU">🇦🇺 Australia</option>
+        <option value="IN">🇮🇳 India</option>
+        <option value="LK">🇱🇰 Sri Lanka</option>
+        <option value="PK">🇵🇰 Pakistan</option>
+        <option value="BD">🇧🇩 Bangladesh</option>
+        <option value="PH">🇵🇭 Philippines</option>
+        <option value="NG">🇳🇬 Nigeria</option>
+        <option value="DE">🇩🇪 Germany</option>
+        <option value="FR">🇫🇷 France</option>
+        <option value="BR">🇧🇷 Brazil</option>
+        <option value="MX">🇲🇽 Mexico</option>
+        <option value="OTHER">🌍 Other</option>
+      </select>
+    </div>
+
+    <div class="chat-type-chooser">
+      <label class="ct-option" id="ct-random">
+        <input type="radio" name="chatType" value="random" checked/>
+        <div class="ct-card">
+          <i class="fa-solid fa-shuffle"></i>
+          <span>Random Chat</span>
+          <small>Match with a stranger</small>
+        </div>
+      </label>
+      <label class="ct-option" id="ct-rooms">
+        <input type="radio" name="chatType" value="rooms"/>
+        <div class="ct-card">
+          <i class="fa-solid fa-door-open"></i>
+          <span>Chat Rooms</span>
+          <small>Join a group room</small>
+        </div>
+      </label>
+    </div>
+
+    <div class="terms-check">
+      <input type="checkbox" id="agreeTerms"/>
+<<<<<<< HEAD
+      <label for="agreeTerms">I am 18+ and agree to the <a href="/terms" target="_blank">Terms of Service</a> &amp; <a href="/privacy" target="_blank">Privacy Policy</a></label>
+=======
+      <label for="agreeTerms">I am 18+ and agree to the <a href="#">Terms of Service</a> & <a href="#">Community Rules</a></label>
+>>>>>>> 89db5f14dcb822e3d094ba727cb6381951cae03c
+    </div>
+
+    <button class="btn-hero large full-width" onclick="goToChat()">
+      <i class="fa-solid fa-paper-plane"></i> Enter Chat
+    </button>
+  </div>
+
+  <div class="safety-note">
+    <i class="fa-solid fa-shield-halved"></i>
+    <span>Your identity is anonymous. No personal data is stored.</span>
+  </div>
+</div>
+
+<script>
+function goToChat() {
+  const nickname = document.getElementById('sNickname').value.trim();
+  const agree = document.getElementById('agreeTerms').checked;
+  const chatType = document.querySelector('input[name="chatType"]:checked').value;
+  if (!nickname) { alert('Please enter a nickname!'); return; }
+  if (!agree) { alert('Please agree to the Terms of Service.'); return; }
+  const params = new URLSearchParams({
+    nickname,
+    gender: document.getElementById('sGender').value,
+    age: document.getElementById('sAge').value,
+    country: document.getElementById('sCountry').value,
+  });
+  if (chatType === 'rooms') {
+    window.location.href = `rooms.html?${params}`;
+  } else {
+    window.location.href = `chat.html?${params}`;
+  }
+}
+
+// Radio label highlight
+document.querySelectorAll('input[name="chatType"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.querySelectorAll('.ct-card').forEach(c => c.classList.remove('selected'));
+    r.closest('.ct-option').querySelector('.ct-card').classList.add('selected');
+  });
+});
+document.querySelector('input[name="chatType"]:checked')
+  .closest('.ct-option').querySelector('.ct-card').classList.add('selected');
+</script>
+</body>
+</html>

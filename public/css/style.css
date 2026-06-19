@@ -1168,3 +1168,18 @@ body.overlay-open { overflow: hidden; }
   gap: .4rem;
   white-space: nowrap;
 }
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .hero-form input,
+  .hero-form select,
+  .btn-hero {
+    width: 100%;
+  }
+}

@@ -1183,3 +1183,48 @@ body.overlay-open { overflow: hidden; }
     width: 100%;
   }
 }
+/* main styles (original css) */
+body {
+  background: black;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+/* 👇 ALWAYS ADD THIS AT THE END */
+@media (max-width: 768px) {
+
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 28px !important;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 22px !important;
+  }
+
+  p {
+    font-size: 14px;
+  }
+
+  .btn-hero {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .orb {
+    display: none;
+  }
+
+}

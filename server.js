@@ -40,6 +40,9 @@ app.get('/terms',   (req, res) => res.sendFile(path.join(__dirname, 'public', 't
 app.get('/community', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'community.html'));
 });
+app.get('/safety', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'safety.html'));
+});
 
 
 

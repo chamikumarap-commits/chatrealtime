@@ -45,30 +45,11 @@ function startChat() {
   const age      = document.getElementById('heroAge')?.value     || '';
   const country  = document.getElementById('heroCountry')?.value || '';
 
-  // ❌ check ALL fields
-  if (!nickname || !gender || !age || !country) {
-    showTopAlert("⚠️ Please fill all details first!");
-
-    // optional: focus first empty field
-    if (!nickname) document.getElementById('heroNickname')?.focus();
-    else if (!gender) document.getElementById('heroGender')?.focus();
-    else if (!age) document.getElementById('heroAge')?.focus();
-    else if (!country) document.getElementById('heroCountry')?.focus();
-
+  if (!nickname) {
+    showToast('Please enter a nickname!', 'warn');
+    document.getElementById('heroNickname')?.focus();
     return;
   }
-
-  // ✅ if all filled → allow chat
-  const user = {
-    nickname,
-    gender,
-    age,
-    country
-  };
-
-  // 👉 මෙතන ඔයාගේ original chat start code එක තියෙයි
-  openDM(user); // or whatever function you use
-}
   const params = new URLSearchParams({ nickname, gender, age, country });
   window.location.href = `chat.html?${params}`;
 }

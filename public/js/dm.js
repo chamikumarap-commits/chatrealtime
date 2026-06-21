@@ -18,6 +18,56 @@ let dmTypingSent = false;
 // conversations: Map<userId, { messages: [], unread: 0, nickname, country, online }>
 const conversations = new Map();
 
+/* ── Sound Notification ── */
+let dmSoundEnabled = localStorage.getItem('dmSoundEnabled') !== 'false'; // default ON
+
+function playDMSound() {
+  if (!dmSoundEnabled) return;
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const times = [0, 0.13];
+    const freqs  = [880, 1100];
+    times.forEach((t, i) => {
+      const osc  = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = freqs[i];
+      gain.gain.setValueAtTime(0, ctx.currentTime + t);
+      gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + t + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.19);
+      osc.start(ctx.currentTime + t);
+      osc.stop(ctx.currentTime + t + 0.22);
+    });
+  } catch(e) { /* audio not supported */ }
+}
+
+function toggleDMSound() {
+  dmSoundEnabled = !dmSoundEnabled;
+  localStorage.setItem('dmSoundEnabled', dmSoundEnabled);
+  updateSoundBtn();
+  if (dmSoundEnabled) playDMSound(); // preview when turning ON
+}
+
+function updateSoundBtn() {
+  const btn = document.getElementById('soundToggleBtn');
+  if (!btn) return;
+  if (dmSoundEnabled) {
+    btn.innerHTML = '<i class="fa-solid fa-bell"></i>';
+    btn.title = 'Notification sound: ON';
+    btn.style.color = '';
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-bell-slash"></i>';
+    btn.title = 'Notification sound: OFF';
+    btn.style.color = 'var(--muted)';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', updateSoundBtn);
+
+
+
 /* ═══════════════════════════════════════
    Init
 ═══════════════════════════════════════ */
@@ -118,10 +168,12 @@ ChatSocket
 
     if (activeDM && activeDM.id === fromId) {
       appendDMBubble(msg, isSent);
+      if (!isSent) playDMSound(); // sound for received message in active chat
     } else if (!isSent) {
       // Unread from someone we're not looking at
       conv.unread = (conv.unread || 0) + 1;
       showToast(`💬 ${d.fromNick}: ${d.text.slice(0, 40)}`, 'info');
+      playDMSound(); // sound for background message
     }
 
     updateRecentList();
@@ -144,9 +196,11 @@ ChatSocket
 
     if (activeDM && activeDM.id === fromId) {
       appendDMBubble(msg, isSent);
+      if (!isSent) playDMSound();
     } else if (!isSent) {
       conv.unread = (conv.unread || 0) + 1;
       showToast(`📷 ${d.fromNick} sent an image`, 'info');
+      playDMSound();
     }
 
     updateRecentList();

@@ -110,21 +110,6 @@ ChatSocket
     ensureConversation(fromId, d.fromNick, d.fromCountry);
     const conv = conversations.get(fromId);
     if (!conv) return;
-      // 🔔 SOUND PLAY (only if message is from OTHER person)
-  if (!isSent) {
-    const soundEnabled = localStorage.getItem("soundEnabled") !== "false";
-
-    if (soundEnabled) {
-      const audio = document.getElementById("msgSound");
-      if (audio) {
-        audio.currentTime = 0;
-        audio.play().catch(() => {});
-      }
-    }
-  }
-
-  // 👉 මෙතනට ඔයාගේ existing message display code තියෙනවා
-});
 
     const msg = { type: 'text', text: d.text, time: d.time, sent: isSent };
     conv.messages.push(msg);

@@ -1,281 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ChatNow – Free Random Chat with Strangers</title>
+  <title>ChatNow – Direct Messages</title>
   <link rel="stylesheet" href="/css/style.css"/>
+  <link rel="stylesheet" href="/css/dm.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
-<body>
+<body class="dm-page">
 
-<!-- ========== HEADER ========== -->
-<header class="header">
-  <div class="container header-inner">
-    <a href="/"" class="logo">
-      <span class="logo-icon"><i class="fa-solid fa-comments"></i></span>
-      Chat<span>Now</span>
-    </a>
-    <nav class="nav">
-      <a href="/"" class="active"><i class="fa-solid fa-house"></i> Home</a>
-      <a href="/chat"><i class="fa-solid fa-bolt"></i> Random Chat</a>
-      <a href="/rooms"><i class="fa-solid fa-door-open"></i> Rooms</a>
-      <a href="/dm"><i class="fa-solid fa-envelope"></i> DMs</a>
-      <a href="#features"><i class="fa-solid fa-star"></i> Features</a>
-    </nav>
-    <button class="btn-start" onclick="window.location.href='/start'">Start Chatting →</button>
-    <button class="hamburger" id="hamburger"><i class="fa-solid fa-bars"></i></button>
-  </div>
-  <div class="mobile-nav" id="mobileNav">
-    <a href="/"">Home</a>
-    <a href="/chat">Random Chat</a>
-    <a href="/rooms">Chat Rooms</a>
-    <a href="/start">Start Chatting</a>
-  </div>
-</header>
+<div class="dm-layout">
 
-<!-- ========== HERO ========== -->
-<section class="hero">
-  <div class="hero-bg">
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="grid-lines"></div>
-  </div>
-  <div class="container hero-content">
-    <div class="hero-badge"><span class="pulse-dot"></span> 12,847 people online now</div>
-    <h1>Chat with <span class="gradient-text">Strangers</span><br/>Worldwide — Instantly</h1>
-    <p>No registration needed. No downloads. Just pick a nickname and start real conversations with real people from around the globe.</p>
-
-    <div class="hero-form">
-      <div class="form-row">
-        <div class="input-group">
-          <i class="fa-solid fa-user"></i>
-          <input type="text" id="heroNickname" placeholder="Your nickname" maxlength="20"/>
-        </div>
-        <select id="heroGender">
-          <option value="">Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
-        <select id="heroAge">
-          <option value="">Age</option>
-          <option value="18-24">18–24</option>
-          <option value="25-34">25–34</option>
-          <option value="35-44">35–44</option>
-          <option value="45+">45+</option>
-        </select>
+  <!-- ══ LEFT: User List Panel ══ -->
+  <aside class="dm-sidebar">
+    <div class="dm-sidebar-header">
+      <a href="/" class="logo">Chat<span>Now</span></a>
+      <div class="dm-nav-links">
+        <a href="/chat"  title="Random Chat"><i class="fa-solid fa-shuffle"></i></a>
+        <a href="/rooms" title="Chat Rooms"><i class="fa-solid fa-door-open"></i></a>
+        <a href="/dm" class="active" title="Direct Messages"><i class="fa-solid fa-envelope"></i></a>
       </div>
-      <div class="form-row">
-        <select id="heroCountry">
-          <option value="">Select Country</option>
-          <option value="US">🇺🇸 United States</option>
-          <option value="UK">🇬🇧 United Kingdom</option>
-          <option value="CA">🇨🇦 Canada</option>
-          <option value="AU">🇦🇺 Australia</option>
-          <option value="IN">🇮🇳 India</option>
-          <option value="LK">🇱🇰 Sri Lanka</option>
-          <option value="PK">🇵🇰 Pakistan</option>
-          <option value="BD">🇧🇩 Bangladesh</option>
-          <option value="PH">🇵🇭 Philippines</option>
-          <option value="NG">🇳🇬 Nigeria</option>
-          <option value="DE">🇩🇪 Germany</option>
-          <option value="FR">🇫🇷 France</option>
-          <option value="BR">🇧🇷 Brazil</option>
-          <option value="MX">🇲🇽 Mexico</option>
-          <option value="OTHER">🌍 Other</option>
-        </select>
-        <button class="btn-hero" onclick="startChat()">
-          <i class="fa-solid fa-paper-plane"></i> Start Chat Free
+    </div>
+
+    <!-- My profile strip -->
+    <div class="dm-my-profile" id="myProfile">
+      <div class="dm-avatar" id="myAvatar">😊</div>
+      <div class="dm-profile-info">
+        <strong id="myNickname">You</strong>
+        <span class="dm-online-dot"><i class="fa-solid fa-circle"></i> Online</span>
+      </div>
+      <div class="ws-pill" id="wsPill"><i class="fa-solid fa-circle-notch fa-spin"></i></div>
+    </div>
+
+    <!-- Search users -->
+    <div class="dm-search-wrap">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="userSearch" placeholder="Search users..." oninput="filterUsers()"/>
+    </div>
+
+    <!-- Online users list -->
+    <div class="dm-section-label">
+      <span>Online Users</span>
+      <span class="dm-count" id="userCount">0</span>
+    </div>
+    <div class="dm-user-list" id="userList">
+      <div class="dm-empty-state" id="emptyUsers">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <p>Waiting for users...</p>
+      </div>
+    </div>
+
+    <!-- Recent DM conversations -->
+    <div class="dm-section-label" id="recentLabel" style="display:none">
+      <span>Recent DMs</span>
+    </div>
+    <div class="dm-recent-list" id="recentList"></div>
+  </aside>
+
+  <!-- ══ RIGHT: DM Chat Panel ══ -->
+  <main class="dm-main">
+
+    <!-- Empty state (no conversation selected) -->
+    <div class="dm-welcome" id="dmWelcome">
+      <div class="dm-welcome-icon"><i class="fa-solid fa-envelope-open-text"></i></div>
+      <h2>Direct Messages</h2>
+      <p>Select an online user from the left to start a private conversation.</p>
+      <div class="dm-welcome-tips">
+        <div class="tip"><i class="fa-solid fa-lock"></i> Private 1-on-1 chat</div>
+        <div class="tip"><i class="fa-solid fa-image"></i> Share images</div>
+        <div class="tip"><i class="fa-solid fa-bolt"></i> Real-time delivery</div>
+      </div>
+    </div>
+
+    <!-- Active DM conversation -->
+    <div class="dm-conversation" id="dmConversation" style="display:none">
+
+      <!-- Header -->
+      <div class="dm-conv-header">
+        <button class="dm-back-btn" onclick="closeDM()" title="Back"><i class="fa-solid fa-arrow-left"></i></button>
+        <div class="dm-conv-avatar" id="convAvatar">🌍</div>
+        <div class="dm-conv-info">
+          <strong id="convName">User</strong>
+          <span id="convStatus" class="dm-conv-status online">
+            <i class="fa-solid fa-circle"></i> Online
+          </span>
+        </div>
+        <div class="dm-conv-actions">
+          <button class="icon-btn" onclick="clearDMHistory()" title="Clear chat"><i class="fa-solid fa-trash"></i></button>
+          <button class="icon-btn" onclick="blockDMUser()" title="Block user"><i class="fa-solid fa-ban"></i></button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div class="dm-messages" id="dmMessages">
+        <div class="dm-conv-start" id="dmConvStart">
+          <i class="fa-solid fa-lock"></i>
+          <p>This is the beginning of your private conversation.</p>
+        </div>
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="dm-typing" id="dmTyping" style="display:none">
+        <span id="dmTypingName">User</span> is typing
+        <span class="typing-dots"><span></span><span></span><span></span></span>
+      </div>
+
+      <!-- Input bar -->
+      <div class="dm-input-bar">
+        <button class="tool-btn" onclick="document.getElementById('dmImgInput').click()" title="Send image">
+          <i class="fa-solid fa-image"></i>
+        </button>
+        <button class="tool-btn" onclick="toggleDMEmoji()" title="Emoji">
+          <i class="fa-solid fa-face-smile"></i>
+        </button>
+        <input type="file" id="dmImgInput" accept="image/*" style="display:none" onchange="sendDMImage(event)"/>
+        <input
+          type="text" id="dmInput" class="msg-input"
+          placeholder="Send a message..."
+          onkeydown="dmHandleKey(event)"
+          oninput="dmHandleTyping()"
+          maxlength="500"
+        />
+        <button class="btn-send" onclick="sendDM()" id="dmSendBtn">
+          <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
-      <p class="form-note"><i class="fa-solid fa-shield-halved"></i> Anonymous & Safe · No account required · Free forever</p>
-    </div>
-  </div>
 
-  <div class="hero-stats">
-    <div class="container stats-row">
-      <div class="stat"><strong>50M+</strong><span>Messages sent</span></div>
-      <div class="stat"><strong>190+</strong><span>Countries</span></div>
-      <div class="stat"><strong>Free</strong><span>Always & Forever</span></div>
-      <div class="stat"><strong>24/7</strong><span>Always Online</span></div>
-    </div>
-  </div>
-</section>
+      <!-- Emoji picker -->
+      <div class="emoji-picker" id="dmEmojiPicker" style="display:none">
+        <div class="emoji-grid" id="dmEmojiGrid"></div>
+      </div>
 
-<!-- ========== FEATURES ========== -->
-<section class="features" id="features">
-  <div class="container">
-    <div class="section-label">Why ChatNow?</div>
-    <h2>Everything you need to <span class="gradient-text">connect</span></h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon cyan"><i class="fa-solid fa-bolt"></i></div>
-        <h3>Instant Random Chat</h3>
-        <p>Get matched with a random stranger in seconds. No waiting, no setup — pure spontaneous connection.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon purple"><i class="fa-solid fa-door-open"></i></div>
-        <h3>Chat Rooms</h3>
-        <p>Join themed chat rooms — General, Singles, Gaming, Travel, and more. Find your tribe instantly.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon orange"><i class="fa-solid fa-lock"></i></div>
-        <h3>100% Anonymous</h3>
-        <p>No account required. Your IP is masked. Chat freely without revealing your personal identity.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon green"><i class="fa-solid fa-mobile-screen"></i></div>
-        <h3>Mobile Friendly</h3>
-        <p>Works perfectly on any device — phone, tablet, or desktop. Chat on the go anytime, anywhere.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon pink"><i class="fa-solid fa-image"></i></div>
-        <h3>Media Sharing</h3>
-        <p>Share images, GIFs, and files directly in chat. Express yourself beyond just words.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon blue"><i class="fa-solid fa-globe"></i></div>
-        <h3>Global Community</h3>
-        <p>Connect with people from 190+ countries. Break language barriers and make worldwide friends.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon purple"><i class="fa-solid fa-envelope"></i></div>
-        <h3>Direct Messages</h3>
-        <p>Send private DMs to any online user. Full image support, typing indicators, and real-time delivery.</p>
-      </div>
     </div>
-  </div>
-</section>
+  </main>
+</div>
 
-<!-- ========== CHAT ROOMS PREVIEW ========== -->
-<section class="rooms-preview">
-  <div class="container">
-    <div class="section-label">Chat Rooms</div>
-    <h2>Pick a room & <span class="gradient-text">join the conversation</span></h2>
-    <div class="rooms-grid">
-      <a href="/rooms?room=general" class="room-card">
-        <div class="room-icon">💬</div>
-        <h4>General Chat</h4>
-        <p>Talk about anything</p>
-        <span class="room-users"><i class="fa-solid fa-circle"></i> 3,421 online</span>
-      </a>
-      <a href="/rooms?room=singles" class="room-card hot">
-        <div class="hot-badge">🔥 Hot</div>
-        <div class="room-icon">💕</div>
-        <h4>Singles Chat</h4>
-        <p>Meet someone special</p>
-        <span class="room-users"><i class="fa-solid fa-circle"></i> 5,182 online</span>
-      </a>
-      <a href="/rooms?room=gaming" class="room-card">
-        <div class="room-icon">🎮</div>
-        <h4>Gaming</h4>
-        <p>Talk games & play</p>
-        <span class="room-users"><i class="fa-solid fa-circle"></i> 1,984 online</span>
-      </a>
-      <a href="/rooms?room=travel" class="room-card">
-        <div class="room-icon">✈️</div>
-        <h4>Travel</h4>
-        <p>Share adventures</p>
-        <span class="room-users"><i class="fa-solid fa-circle"></i> 892 online</span>
-      </a>
-      <a href="/rooms?room=music" class="room-card">
-        <div class="room-icon">🎵</div>
-        <h4>Music & Arts</h4>
-        <p>Creative souls unite</p>
-        <span class="room-users"><i class="fa-solid fa-circle"></i> 741 online</span>
-      </a>
-      <a href="/rooms?room=tech" class="room-card">
-        <div class="room-icon">💻</div>
-        <h4>Tech Talk</h4>
-        <p>Geeks & devs welcome</p>
-        <span class="room-users"><i class="fa-solid fa-circle"></i> 1,103 online</span>
-      </a>
-    </div>
-    <div class="rooms-cta">
-      <a href="/rooms" class="btn-outline">View All Rooms <i class="fa-solid fa-arrow-right"></i></a>
-    </div>
-  </div>
-</section>
-
-<!-- ========== HOW IT WORKS ========== -->
-<section class="how-it-works">
-  <div class="container">
-    <div class="section-label">How It Works</div>
-    <h2>Three steps to your <span class="gradient-text">next conversation</span></h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <i class="fa-solid fa-pen step-icon"></i>
-        <h4>Enter Your Details</h4>
-        <p>Pick a nickname, your age, gender and country. No email, no password needed.</p>
-      </div>
-      <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <i class="fa-solid fa-shuffle step-icon"></i>
-        <h4>Get Matched</h4>
-        <p>Our system instantly connects you with a random stranger or drops you into a room.</p>
-      </div>
-      <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <i class="fa-solid fa-comments step-icon"></i>
-        <h4>Start Chatting</h4>
-        <p>Text, share images, send GIFs — the conversation is yours to own.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ========== CTA BANNER ========== -->
-<section class="cta-banner">
-  <div class="container">
-    <h2>Ready to meet someone new?</h2>
-    <p>Join thousands of people chatting right now — it's free, instant, and fun.</p>
-    <button class="btn-hero large" onclick="window.location.href='/start'">
-      <i class="fa-solid fa-bolt"></i> Start Chatting Now
+<!-- Nickname modal (if user has no nickname yet) -->
+<div class="modal-overlay" id="nickModal" style="display:none">
+  <div class="modal">
+    <h3><i class="fa-solid fa-user"></i> Set Your Nickname</h3>
+    <p>You need a nickname to send direct messages.</p>
+    <input type="text" id="nickInput" placeholder="Your nickname" maxlength="20"/>
+    <button class="btn-hero full-width" style="margin-top:1rem" onclick="saveNickname()">
+      <i class="fa-solid fa-check"></i> Continue
     </button>
   </div>
-</section>
+</div>
 
-<!-- ========== FOOTER ========== -->
-<footer class="footer">
-  <div class="container footer-inner">
-    <div class="footer-brand">
-      <a href="/"" class="logo">Chat<span>Now</span></a>
-      <p>Free anonymous chat with strangers from around the world. Safe, fun, and instant.</p>
-      <div class="social-links">
-        <a href="#"><i class="fa-brands fa-twitter"></i></a>
-        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#"><i class="fa-brands fa-discord"></i></a>
-      </div>
-    </div>
-    <div class="footer-links">
-      <h5>Chat</h5>
-      <a href="/chat">Random Chat</a>
-      <a href="/rooms">Chat Rooms</a>
-      <a href="/dm">Direct Messages</a>
-      <a href="/start">Start Now</a>
-    </div>
-    <div class="footer-links">
-      <h5>Company</h5>
-      <a href="/about">About Us</a>
-      <a href="/contact">Contact Us</a>
-    </div>
-    <div class="footer-links">
-      <h5>Legal</h5>
-      <a href="/privacy">Privacy Policy</a>
-      <a href="/terms">Terms &amp; Conditions</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 ChatNow. All rights reserved. For users 18+ only.</p>
-  </div>
-</footer>
-
-<script src="/js/main.js"></script>
+<script src="/js/socket.js"></script>
+<script src="/js/dm.js"></script>
 </body>
 </html>

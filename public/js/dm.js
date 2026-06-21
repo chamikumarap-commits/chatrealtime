@@ -50,17 +50,7 @@ function saveNickname() {
   ChatSocket.send({ type: 'get_user_list' });
 }
 $('nickInput')?.addEventListener('keydown', e => { if (e.key === 'Enter') saveNickname(); });
-function showTopAlert(message) {
-  const alertBox = document.getElementById("topAlert");
-  if (!alertBox) return;
 
-  alertBox.textContent = message;
-  alertBox.style.display = "block";
-
-  setTimeout(() => {
-    alertBox.style.display = "none";
-  }, 3000); // 3 seconds
-}
 /* ── Avatar helper ── */
 function avatarFor(gender) {
   if (gender === 'female') return ['🌸','💫','✨','🌻','💕'][Math.floor(Math.random()*5)];

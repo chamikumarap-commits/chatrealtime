@@ -119,9 +119,28 @@
 
 <script src="/js/socket.js"></script>
 <script src="/js/chat-rt.js"></script>
-    <!-- chat UI here -->
+   <!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+</head>
+<body>
 
+  <!-- Chat UI -->
+  <div id="messages"></div>
+
+  <input type="text" id="messageInput">
+  <button onclick="sendMessage()">Send</button>
+
+  <!-- 🔔 SOUND -->
   <audio id="msgSound" src="/notification.mp3"></audio>
   <button id="toggleSound">🔔 Sound: ON</button>
+
+  <!-- scripts -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
 </body>
 </html>

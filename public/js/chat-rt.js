@@ -7,6 +7,42 @@
 /* ── DOM shortcuts ── */
 const $ = id => document.getElementById(id);
 
+/* ── Chat Sound Notification ── */
+let chatSoundEnabled = localStorage.getItem('chatSoundEnabled') !== 'false'; // default ON
+
+const _chatNotifAudio = new Audio('/sounds/notification.mp3');
+function playChatSound() {
+  if (!chatSoundEnabled) return;
+  try {
+    _chatNotifAudio.currentTime = 0;
+    _chatNotifAudio.play().catch(() => {});
+  } catch(e) {}
+}
+
+function toggleChatSound() {
+  chatSoundEnabled = !chatSoundEnabled;
+  localStorage.setItem('chatSoundEnabled', chatSoundEnabled);
+  updateChatSoundBtn();
+  if (chatSoundEnabled) playChatSound();
+}
+
+function updateChatSoundBtn() {
+  const btn = document.getElementById('chatSoundBtn');
+  if (!btn) return;
+  if (chatSoundEnabled) {
+    btn.innerHTML = '<i class="fa-solid fa-bell"></i>';
+    btn.title = 'Notification sound: ON';
+    btn.style.color = '';
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-bell-slash"></i>';
+    btn.title = 'Notification sound: OFF';
+    btn.style.color = 'var(--muted)';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', updateChatSoundBtn);
+
+
 /* ── State ── */
 let connected     = false;
 let typingTimeout = null;
@@ -174,11 +210,13 @@ ChatSocket
   .on('message', (d) => {
     $('typingIndicator').style.display = 'none';
     addMessage(d.text, 'received', false);
+    playChatSound();
   })
 
   .on('image', (d) => {
     $('typingIndicator').style.display = 'none';
     addImageMsg(d.src, 'received');
+    playChatSound();
   })
 
   .on('typing', (d) => {

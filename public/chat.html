@@ -52,6 +52,7 @@
         </div>
       </div>
       <div class="chat-actions">
+        <button class="icon-btn" id="chatSoundBtn" title="Notification sound: ON" onclick="toggleChatSound()"><i class="fa-solid fa-bell"></i></button>
         <button class="icon-btn" title="Report" onclick="openReport()"><i class="fa-solid fa-flag"></i></button>
         <button class="icon-btn" title="Block" onclick="blockUser()"><i class="fa-solid fa-ban"></i></button>
         <button class="btn-skip" onclick="skipStranger()"><i class="fa-solid fa-forward"></i> Skip</button>
@@ -119,28 +120,5 @@
 
 <script src="/js/socket.js"></script>
 <script src="/js/chat-rt.js"></script>
-   <!DOCTYPE html>
-<html>
-<head>
-  <title>Chat</title>
-</head>
-<body>
-
-  <!-- Chat UI -->
-  <div id="messages"></div>
-
-  <input type="text" id="messageInput">
-  <button onclick="sendMessage()">Send</button>
-
-  <!-- 🔔 SOUND -->
-  <audio id="msgSound" src="/notification.mp3"></audio>
-  <button id="toggleSound">🔔 Sound: ON</button>
-
-  <!-- scripts -->
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="script.js"></script>
-
-</body>
-</html>
 </body>
 </html>

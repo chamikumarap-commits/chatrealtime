@@ -7,55 +7,6 @@
 /* ── DOM shortcuts ── */
 const $ = id => document.getElementById(id);
 
-/* ── Chat Sound Notification ── */
-let chatSoundEnabled = localStorage.getItem('chatSoundEnabled') !== 'false'; // default ON
-
-function playChatSound() {
-  if (!chatSoundEnabled) return;
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const times = [0, 0.13];
-    const freqs  = [880, 1100];
-    times.forEach((t, i) => {
-      const osc  = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.type = 'sine';
-      osc.frequency.value = freqs[i];
-      gain.gain.setValueAtTime(0, ctx.currentTime + t);
-      gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + t + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + t + 0.19);
-      osc.start(ctx.currentTime + t);
-      osc.stop(ctx.currentTime + t + 0.22);
-    });
-  } catch(e) {}
-}
-
-function toggleChatSound() {
-  chatSoundEnabled = !chatSoundEnabled;
-  localStorage.setItem('chatSoundEnabled', chatSoundEnabled);
-  updateChatSoundBtn();
-  if (chatSoundEnabled) playChatSound();
-}
-
-function updateChatSoundBtn() {
-  const btn = document.getElementById('chatSoundBtn');
-  if (!btn) return;
-  if (chatSoundEnabled) {
-    btn.innerHTML = '<i class="fa-solid fa-bell"></i>';
-    btn.title = 'Notification sound: ON';
-    btn.style.color = '';
-  } else {
-    btn.innerHTML = '<i class="fa-solid fa-bell-slash"></i>';
-    btn.title = 'Notification sound: OFF';
-    btn.style.color = 'var(--muted)';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', updateChatSoundBtn);
-
-
 /* ── State ── */
 let connected     = false;
 let typingTimeout = null;
@@ -223,13 +174,11 @@ ChatSocket
   .on('message', (d) => {
     $('typingIndicator').style.display = 'none';
     addMessage(d.text, 'received', false);
-    playChatSound();
   })
 
   .on('image', (d) => {
     $('typingIndicator').style.display = 'none';
     addImageMsg(d.src, 'received');
-    playChatSound();
   })
 
   .on('typing', (d) => {
